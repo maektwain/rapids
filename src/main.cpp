@@ -1570,10 +1570,7 @@ int64_t GetBlockValue(int nHeight)
         if (nHeight < Params().LAST_POW_BLOCK())
             return 5000 * COIN;
     }
-    
-    if(IsBurnBlock(nHeight)) {
-		nSubsidy = GetBurnAward(nHeight);
-    } else {
+
         if (nHeight == 0) {
             nSubsidy = 20000000000 * COIN;
         } else {
@@ -1581,7 +1578,6 @@ int64_t GetBlockValue(int nHeight)
             nSubsidy >>= ((nHeight - 1) / Params().SubsidyHalvingInterval());
         }
         if(nHeight > 0) nSubsidy *= 0.9;
-    }
 
     // Check if we reached the coin max supply.
     int64_t nMoneySupply = chainActive.Tip()->nMoneySupply;
@@ -1595,30 +1591,10 @@ int64_t GetBlockValue(int nHeight)
     return nSubsidy;
 }
 
-int nStartBurnBlock = 43199;
-int nBurnBlockStep = 43200;
 
-bool IsBurnBlock(int nHeight)
-{
-	if(nHeight < nStartBurnBlock)
-		return false;
-	else if( (nHeight-nStartBurnBlock) % nBurnBlockStep == 0)
-		return true;
-	else
-		return false;
-}
 
-int64_t GetBurnAward(int nHeight)
-{
-    int64_t nSubsidy = 0;
 
-	if(IsBurnBlock(nHeight)) {
-        //one month : 43200block, 10% - reward to PoS
-        nSubsidy = 43200 * GetTotalValue(nHeight) * 0.1 + GetTotalValue(nHeight) * 0.3;
-		return nSubsidy; 
-	} else
-		return 0;
-}
+
 
 int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCount)
 {

@@ -207,10 +207,10 @@ public:
     {
         networkID = CBaseChainParams::TESTNET;
         strNetworkID = "test";
-        pchMessageStart[0] = 0x33;
-        pchMessageStart[1] = 0x8a;
-        pchMessageStart[2] = 0xe5;
-        pchMessageStart[3] = 0xa8;
+        pchMessageStart[0] = 0x61;
+        pchMessageStart[1] = 0xa2;
+        pchMessageStart[2] = 0xf5;
+        pchMessageStart[3] = 0xcb;
         vAlertPubKey = ParseHex("04ba89975265af1d4c6295d3587eb4a0e4b758bde1621ef2ab8f92b98e7ed1c85547c9b7a3f145a66aa2abb91db5c13295828e77d823ea6d9b4bb89912425e1efe");
         nDefaultPort = 19333;
         nEnforceBlockUpgradeMajority = 51;
@@ -236,17 +236,18 @@ public:
         vSeeds.clear();
 
         // Testnet Rapids addresses start with 'g'
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 98);
-        // Testnet Rapids script addresses start with '5' or '6'
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 12);
-        // Testnet private keys start with 'k'
-        base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 108);
-        // Testnet Rapids BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
-        base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xCF).convert_to_container<std::vector<unsigned char> >();
-        // Testnet Rapids BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
-        base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
-        // Testnet rapids BIP44 coin type is '1' (All coin's testnet default)
-        base58Prefixes[EXT_COIN_TYPE] = boost::assign::list_of(0x80)(0x00)(0x00)(0x01).convert_to_container<std::vector<unsigned char> >();
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 61);
+        // Rapids script addresses start with '3'
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 6);
+        // Rapids private keys start with 'K'
+        base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 46);
+        // Rapids BIP32 pubkeys start with 'xpub' (Bitcoin defaults)
+        base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
+        // Rapids BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
+        base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
+        // Rapids BIP44 coin type is '222' (0x800000de)
+        // BIP44 coin type is from https://github.com/satoshilabs/slips/blob/master/slip-0044.md
+        base58Prefixes[EXT_COIN_TYPE] = boost::assign::list_of(0x80)(0x00)(0x00)(0xde).convert_to_container<std::vector<unsigned char> >();
 
         convertSeed6(vFixedSeeds, pnSeed6_test, ARRAYLEN(pnSeed6_test));
 
@@ -281,11 +282,10 @@ public:
     {
         networkID = CBaseChainParams::REGTEST;
         strNetworkID = "regtest";
-        strNetworkID = "regtest";
-        pchMessageStart[0] = 0x20;
-        pchMessageStart[1] = 0xee;
-        pchMessageStart[2] = 0x32;
-        pchMessageStart[3] = 0xbc;
+        pchMessageStart[0] = 0x61;
+        pchMessageStart[1] = 0xa2;
+        pchMessageStart[2] = 0xf5;
+        pchMessageStart[3] = 0xcb;
         nSubsidyHalvingInterval = 150;
         nEnforceBlockUpgradeMajority = 750;
         nRejectBlockOutdatedMajority = 950;
