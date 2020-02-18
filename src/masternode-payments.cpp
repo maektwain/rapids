@@ -256,33 +256,7 @@ bool IsBlockPayeeValid(const CBlock& block, int nBlockHeight)
     // In all cases a masternode will get the payment for this block
 
     //check if it's valid burn block
-    if(IsBurnBlock(nBlockHeight)) {
-		
-		CAmount BurnAmount = GetBurnAward(nBlockHeight);
-		
-		bool bFound = false;
-		
-		BOOST_FOREACH (CTxOut out, txNew.vout) {
-			if(out.nValue == BurnAmount) {
-				bFound = true;  //correct Burn payment has been found
-				break;
-			}
-		}
-		
-		if(!bFound) {
-			LogPrint("masternode","Invalid Burn payment detected %s\n", txNew.ToString().c_str());
-			if(IsSporkActive(SPORK_17_BURN_PAYMENT_ENFORCEMENT))
-				return false;
-			else {
-			    LogPrint("masternode","SPORK_17_BURN_PAYMENT_ENFORCEMENT is not enabled, accept anyway\n");
-				return true;
-			}
-		} else {
-			LogPrint("masternode","Valid burn payment detected %s\n", txNew.ToString().c_str());
-			return true;
-		}
-		
-	} else {
+
 	    //check for masternode payee
 	    if (masternodePayments.IsTransactionValid(txNew, nBlockHeight))
 	        return true;
@@ -291,7 +265,6 @@ bool IsBlockPayeeValid(const CBlock& block, int nBlockHeight)
 	    if (IsSporkActive(SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT))
 	        return false;
 	    LogPrint("masternode","Masternode payment enforcement is disabled, accepting block\n");
-    }
 
     return true;
 }
@@ -304,9 +277,7 @@ void FillBlockPayee(CMutableTransaction& txNew, CAmount nFees, bool fProofOfStak
 
     if (IsSporkActive(SPORK_13_ENABLE_SUPERBLOCKS) && budget.IsBudgetPaymentBlock(pindexPrev->nHeight + 1)) {
         budget.FillBlockPayee(txNew, nFees, fProofOfStake);
-    } else if(IsBurnBlock(pindexPrev->nHeight)) {
-		budget.FillBurnBlockPayee(txNew, nFees, fProofOfStake);
-	} else {
+    }  else {
         masternodePayments.FillBlockPayee(txNew, nFees, fProofOfStake);
     }
 }
